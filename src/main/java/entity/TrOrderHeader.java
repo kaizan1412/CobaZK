@@ -3,6 +3,7 @@ package entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -21,10 +22,9 @@ public class TrOrderHeader extends BaseEntity implements Serializable{
 
 	@Id
 	@Column(name="no_nota")
-	private String noNota;
-	
+	private String noNota;	
 	@Column(name="transaction_date")
-	private LocalDateTime transactionDate;
+	private Date transactionDate;
 	@Column(name="total_price")
 	private BigDecimal totalPrice;
 	@Column(name="global_discount")
@@ -32,7 +32,7 @@ public class TrOrderHeader extends BaseEntity implements Serializable{
 	@Column(name="customer_code")
 	private String customerCode;
 	@Column(name="employee_code")
-	private String employeeCode;
+	private Integer employeeCode;
 
 	public String getNoNota() {
 		return noNota;
@@ -40,10 +40,10 @@ public class TrOrderHeader extends BaseEntity implements Serializable{
 	public void setNoNota(String noNota) {
 		this.noNota = noNota;
 	}
-	public LocalDateTime getTransactionDate() {
+	public Date getTransactionDate() {
 		return transactionDate;
 	}
-	public void setTransactionDate(LocalDateTime transactionDate) {
+	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 	public BigDecimal getTotalPrice() {
@@ -64,10 +64,10 @@ public class TrOrderHeader extends BaseEntity implements Serializable{
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
 	}
-	public String getEmployeeCode() {
+	public Integer getEmployeeCode() {
 		return employeeCode;
 	}
-	public void setEmployeeCode(String employeeCode) {
+	public void setEmployeeCode(Integer employeeCode) {
 		this.employeeCode = employeeCode;
 	}
 	

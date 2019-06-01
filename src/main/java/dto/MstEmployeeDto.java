@@ -29,6 +29,8 @@ public class MstEmployeeDto {
 	private String provinceCode;
 	private String address;
 	private String postalCode;
+	private String username;
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -129,6 +131,12 @@ public class MstEmployeeDto {
 				+ ", gender=" + gender + ", birthPlace=" + birthPlace
 				+ ", cityCode=" + cityCode + ", provinceCode=" + provinceCode
 				+ ", address=" + address + ", postalCode=" + postalCode + "]";
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 

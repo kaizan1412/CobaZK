@@ -86,7 +86,7 @@ public class KaryawanEditVmd {
 	@Command(value="save")
 	public void save(){
 		MstEmployeeDto mstKaryawanFindOne = new MstEmployeeDto();
-		mstKaryawanFindOne = mstEmployeeSvc.findOne(mstEmployeeDto);
+		mstKaryawanFindOne = mstEmployeeSvc.findByEmpId(mstEmployeeDto.getId());
 		
 		if(mstKaryawanFindOne != null && mstKaryawanFindOne.getId() != null){
 			MstDepartmentPk deptPk = new MstDepartmentPk();

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
+import entity.MstCity;
 import entity.enumcol.GenderEnum;
 
 public class MstCustomerDto {
@@ -16,8 +17,9 @@ public class MstCustomerDto {
 	
 	private String customerCode;
 	private String customerName;
-	private String cityCode;
-	private String provinceCode;
+	private MstCityDto city;
+//	private String provinceCode;
+	private MstProvinceDto province;
 	private Date dateOfBirth;
 	private GenderEnum gender;
 	private String postalCode;
@@ -59,18 +61,18 @@ public class MstCustomerDto {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getCityCode() {
-		return cityCode;
-	}
-	public void setCityCode(String cityCode) {
-		this.cityCode = cityCode;
-	}
-	public String getProvinceCode() {
-		return provinceCode;
-	}
-	public void setProvinceCode(String provinceCode) {
-		this.provinceCode = provinceCode;
-	}
+//	public String getCityCode() {
+//		return cityCode;
+//	}
+//	public void setCityCode(String cityCode) {
+//		this.cityCode = cityCode;
+//	}
+//	public String getProvinceCode() {
+//		return provinceCode;
+//	}
+//	public void setProvinceCode(String provinceCode) {
+//		this.provinceCode = provinceCode;
+//	}
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -100,6 +102,18 @@ public class MstCustomerDto {
 	}
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
+	}
+	public MstCityDto getCity() {
+		return city;
+	}
+	public void setCity(MstCityDto city) {
+		this.city = city;
+	}
+	public MstProvinceDto getProvince() {
+		return province;
+	}
+	public void setProvince(MstProvinceDto province) {
+		this.province = province;
 	}
 	
 }

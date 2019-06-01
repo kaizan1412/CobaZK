@@ -12,6 +12,15 @@ public class MstProductPk implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String productCode;
+	
+	public MstProductPk() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public MstProductPk(String productCode) {
+		this.productCode = productCode;
+	}
+	
 	public String getProductCode() {
 		return productCode;
 	}

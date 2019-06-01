@@ -58,6 +58,9 @@ public class MstEmployee extends BaseEntity implements Serializable{
 	@Column(name="postal_code")
 	private String postalCode;
 	
+	@Column(name="username")
+	private String username;
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -137,6 +140,14 @@ public class MstEmployee extends BaseEntity implements Serializable{
 
 	public void setProvinceCode(String provinceCode) {
 		this.provinceCode = provinceCode;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

@@ -1,0 +1,175 @@
+<?page title="Order Edit" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Order Edit" border="normal" 
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('vmd.OrderEditVmd')">
+	
+	<hlayout>
+		<button label="back" onClick="@command('back')" />
+		<button label="save" onClick="@command('save')" />
+	</hlayout>
+	
+	<space />
+	
+	<grid>
+		<columns>
+			<column width="15%" label="" />
+			<column width="20%" label="" />
+			<column width="1%" label="" />
+			<column width="10%" label="" />
+			<column width="54%" label="" />
+		</columns>
+		
+		<rows>
+			<row>
+				<label value="No Nota" style="float:right;" />
+				<textbox constraint="no empty : harus diisi" 
+					value="@bind(vm.trOrderHeaderDto.noNota)" 
+					readonly="@load(vm.readonly)" />
+				<label value="" />
+				<label value="" />
+				<label value="" />
+			</row>
+			
+			<row>
+				<label value="Tanggal Transaksi" style="float:right;" />
+				<datebox constraint="no empty : harus diisi" 
+					value="@bind(vm.trOrderHeaderDto.transactionDate)" />
+				<label value="" />
+				<label value="" />
+				<label value="" />
+			</row>
+			
+			<row>
+				<label value="Customer" style="float:right;" />
+				<combobox constraint="no empty : harus diisi" 
+					model="@load(vm.listCustomers)" 
+					selectedItem="@bind(vm.trOrderHeaderDto.customer)" 
+					value="@load(vm.mstCustomerDto.customerName)">
+					<template name="model">
+						<comboitem label="@load(each.customerName)" value="@load(each.customerCode)" />
+					</template>
+				</combobox>
+				<label value="" />
+				<label value="Karyawan" />
+				<textbox value="@bind(vm.mstEmployeeDto.employeeName)" readonly="true" />
+			</row>
+		</rows>
+	</grid>
+	
+	<vlayout>
+		<groupbox>
+			<caption label="Detail" />
+			<separator />
+			<hbox width="100%">
+				<space />
+				<button label="add" onClick="@command('addDetail')" visible="@load(vm.visible)" />
+				<button label="delete" onClick="@command('removeDetail')" visible="@load(vm.visible)" />
+				<space />
+			</hbox>
+			
+			<separator />
+			<listbox model="@load(vm.listOrderDetails)" selectedItem="@bind(vm.trOrderDetailDto)"  >
+				<listhead>
+					<listheader label="Kode Detail" />
+					<listheader label="Barang" />
+					<listheader label="Qty" />
+					<listheader label="Harga Satuan" />
+					<listheader label="Diskon" />
+					<listheader label="Sub total" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.detailId)" />
+						<listcell label="@load(each.product.productName)" />
+						<listcell label="@load(each.qty)" />
+						<listcell label="@load(each.unitPrice)" />
+						<listcell label="@load(each.discount)" />
+						<listcell label="@load(each.subtotal)" />
+					</listitem>
+				</template>
+			</listbox>
+			
+			<space />
+			
+			<div style="text-align:right;">
+				<vlayout>
+					<hlayout>
+						<label value="Global Discount % : " style="float:right;" />
+						<intbox value="@bind(vm.trOrderHeaderDto.globalDiscount)" 
+								style="text-align:left;" width="70px" onChange="@command('hitungHargaTotal')" />
+					</hlayout>
+					<hlayout>
+						<label value="Total : " style="float:right;" />
+						<intbox value="@bind(vm.trOrderHeaderDto.totalPrice)" style="text-align:left;" 
+								width="70px" readonly="true" />
+					</hlayout>
+				</vlayout>
+			</div>
+			
+		</groupbox>
+	</vlayout>
+	
+	<window visible="@bind(vm.statusPopup)" width="600px" height="400px" mode="modal" 
+			contentStyle="overflow:auto" 
+			style="-webkit0box-shadow: 1px 1px 10px 3px #969696;
+						 	box-shadow: 1px 1px 10px 3px #969696" title="Add Detail" >
+			<hlayout>
+				<button label="back" onClick="@command('backDetail')" />
+				<button label="save" onClick="@command('saveDetail')" />
+			</hlayout>
+			
+			<space />
+			
+			<grid>
+				<columns>
+					<column width="30%" align="right" />
+					<column width="70%" align="right" />
+				</columns>
+				
+				<rows>
+					<row>
+						<label value="Kode Detail" />
+						<textbox value="@bind(vm.trOrderDetailDto.detailId)" />
+					</row>
+					
+					<row>
+						<label value="Product" />
+						<combobox model="@load(vm.listProducts)" selectedItem="@bind(vm.trOrderDetailDto.product)" onSelect="@command('tampilStok')" >
+							<template name="model">
+								<comboitem label="@load(each.productName)" value="@load(each.productCode)" />
+							</template>
+						</combobox>
+					</row>
+					
+					<row>
+						<label value="Stok" />
+						<textbox readonly="true" value="@bind(vm.stok)" />
+					</row>
+					
+					<row>
+						<label value="Harga Satuan" />
+						<textbox value="@bind(vm.trOrderDetailDto.unitPrice)" />
+					</row>
+					
+					<row>
+						<label value="Quantity" />
+						<intbox value="@bind(vm.trOrderDetailDto.qty)" />
+					</row>
+					
+					<row>
+						<label value="Diskon" />
+						<intbox value="@bind(vm.trOrderDetailDto.discount)" onChange="@command('hitungSubTotal')" />
+					</row>
+					
+					<row>
+						<label value="Subtotal" />
+						<decimalbox value="@bind(vm.trOrderDetailDto.subtotal)" />
+					</row>
+					
+				</rows>
+			</grid>
+	</window>
+	
+</window>
+</zk>

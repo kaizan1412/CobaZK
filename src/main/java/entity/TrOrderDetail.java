@@ -23,7 +23,7 @@ public class TrOrderDetail extends BaseEntity implements Serializable{
 	@Column(name="detail_id")
 	private String detailId;
 	@Column(name="qty")
-	private Integer qty;
+	private Long qty;
 	@Column(name="subtotal")
 	private BigDecimal subtotal;
 	@Column(name="discount")
@@ -47,11 +47,11 @@ public class TrOrderDetail extends BaseEntity implements Serializable{
 		this.detailId = detailId;
 	}
 
-	public Integer getQty() {
+	public Long getQty() {
 		return qty;
 	}
 
-	public void setQty(Integer qty) {
+	public void setQty(Long qty) {
 		this.qty = qty;
 	}
 

@@ -106,7 +106,7 @@ public class MstProvinceServiceImpl implements MstProvinceService {
 				pk.setProvinceCode(mstProvinceDto.getProvinceCode());
 
 				MstProvince prov = mstProvinceDao.findOne(pk);
-				prov.setDeleted(Boolean.FALSE);
+				prov.setDeleted(Boolean.TRUE);
 				prov.setUpdatedDate(mstProvinceDto.getUpdatedDate());
 				prov.setUpdatedUser(mstProvinceDto.getUpdatedUser());
 				mstProvinceDao.save(prov);

@@ -6,10 +6,11 @@ import dto.MstEmployeeDto;
 
 public interface MstEmployeeService {
 	
-	public void save(MstEmployeeDto mstKaryawanDto);
+	public void save(MstEmployeeDto mstEmployeeDto);
 	public List<MstEmployeeDto> findAll();
-	public void delete(MstEmployeeDto mstKaryawanDto);
-	public MstEmployeeDto findOne(MstEmployeeDto mstKaryawanDto);
-	public void update(MstEmployeeDto mstKaryawanDto);
+	public void delete(MstEmployeeDto mstEmployeeDto);
+	public MstEmployeeDto findByEmpId(Integer employeeId);
+	public void update(MstEmployeeDto mstEmployeeDto);
+	public MstEmployeeDto findByUsername(String username);
 
 }

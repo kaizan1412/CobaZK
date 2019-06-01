@@ -1,6 +1,37 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="new page title" border="normal">
-New Content Here!
+<window title="Customer" border="normal" 
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('vmd.CustomerVmd')">
+	
+	<hlayout>
+		<button label="add" onClick="@command('add')" />
+		<button label="edit" onClick="@command('edit')" />
+		<button label="delete" onClick="@command('delete')" />
+	</hlayout>
+	
+	<space />
+	
+	<listbox model="@load(vm.listCustomer)" selectedItem="@bind(vm.mstCustomerDto)">
+		<listhead>
+			<listheader label="Customer Code" sort="auto" />
+			<listheader label="Customer Name" sort="auto" />
+			<listheader label="Date of Birth" sort="auto" />
+			<listheader label="Address" sort="auto" />
+			<listheader label="City" sort="auto" />
+			<listheader label="Province" sort="auto" />
+		</listhead>
+		<template name="model">
+			<listitem>
+				<listcell label="@load(each.customerCode)" />
+				<listcell label="@load(each.customerName)" />
+				<listcell label="@load(each.dateOfBirth)" />
+				<listcell label="@load(each.address)" />
+				<listcell label="@load(each.city.cityName)" />
+				<listcell label="@load(each.province.provinceName)" />
+			</listitem>
+		</template>
+	</listbox>
+	
 </window>
 </zk>

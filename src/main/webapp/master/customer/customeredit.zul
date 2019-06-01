@@ -1,0 +1,30 @@
+<?page title="Customer Edit" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Customer Edit" border="normal" 
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('vmd.CustomerEditVmd')">
+	
+	<hlayout>
+		<button label="back" onClick="@command('back')" />
+		<button label="save" onClick="@command('save')" />
+	</hlayout>
+	
+	<space />
+	
+	<grid>
+		<columns>
+			<column label="" width="250px" />
+			<column label="" width="300px" />
+		</columns>
+		
+		<rows>
+			<row>
+				<label value="Customer Code" />
+				<textbox constraint="no empty : harus diisi" value="@load(vm.mstCustmerDto.customerCode) @save(vm.mstCustmerDto.customerCode, before = 'save')" 
+					readonly="@load(vm.mstCustmerDto.customerCode eq null ? false : true)" />
+			</row>
+		</rows>
+	</grid>
+	
+</window>
+</zk>

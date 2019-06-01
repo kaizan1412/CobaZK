@@ -19,7 +19,7 @@ public class TestKaryawan {
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/app-config.xml");
 		
-		MstEmployeeService mstKaryawanSvc = context.getBean(MstEmployeeService.class);
+		MstEmployeeService mstEmployeeSvc = context.getBean(MstEmployeeService.class);
 		MstDepartmentDao mstDepartmentDao = context.getBean(MstDepartmentDao.class);
 		
 		MstDepartment dept = mstDepartmentDao.findByDeptName("DIVISI FINANCE");
@@ -33,7 +33,10 @@ public class TestKaryawan {
 		dto.setGender(GenderEnum.MALE);
 		dto.setId(3);
 		dto.setEmployeeName("Rizky");
-		mstKaryawanSvc.save(dto);
+//		mstKaryawanSvc.save(dto);
+		
+		dto = mstEmployeeSvc.findByUsername("Haqi");
+		System.out.println(dto.getEmployeeName()  + " USERNAME: " + dto.getUsername());
 	}
 
 }

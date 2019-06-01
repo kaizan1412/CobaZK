@@ -117,8 +117,8 @@ public class MstCityServiceImpl implements MstCityService{
 					dto.setUpdatedDate(city.getUpdatedDate());
 					dto.setUpdatedUser(city.getUpdatedUser());
 					list.add(dto);
-					return list;
 				}
+				return list;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

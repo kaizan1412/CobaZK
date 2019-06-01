@@ -83,4 +83,5 @@ public class MstCustomer extends BaseEntity implements Serializable{
 		this.provinceCode = provinceCode;
 	}
 
+
 }

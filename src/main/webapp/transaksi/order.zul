@@ -1,0 +1,40 @@
+<?page title="Transaksi" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Transaksi" border="normal" 
+		apply="org.zkoss.bind.BindComposer" 
+		viewModel="@id('vm') @init('vmd.OrderVmd')">
+		
+		<hlayout>
+			<button label="add" onClick="@command('add')" />
+			<button label="edit" onClick="@command('edit')" />
+			<button label="delete" onClick="@command('delete')" />
+		</hlayout>
+		
+		<div style="text-align:right">
+			<label value="search" />
+			<textbox value="@bind(vm.search)" onOK="@command('search')" />
+		</div>
+		
+		<space />
+		
+		<listbox model="@load(vm.listOrders)" selectedItem="@bind(vm.trOrderHeaderDto)">
+			<listhead>
+				<listheader label="No Nota" sort="auto" />
+				<listheader label="Tanggal Transaksi" sort="auto" />
+				<listheader label="Harga Total" sort="auto" />
+				<listheader label="Customer" sort="auto" />
+				<listheader label="Karyawan" sort="auto" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.noNota)" />
+					<listcell label="@load(each.transactionDate)" />
+					<listcell label="@load(each.totalPrice)" />
+					<listcell label="@load(each.customer.customerName)" />
+					<listcell label="@load(each.employee.employeeName)" />
+				</listitem>
+			</template>
+		</listbox>
+		
+</window>
+</zk>

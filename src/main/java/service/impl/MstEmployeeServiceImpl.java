@@ -28,25 +28,26 @@ public class MstEmployeeServiceImpl implements MstEmployeeService{
 	private MstDepartmentDao mstDepartmentDao;
 	
 	@Override
-	public void save(MstEmployeeDto mstKaryawanDto) {
+	public void save(MstEmployeeDto mstEmployeeDto) {
 		try {
-			MstEmployee mstKaryawan = new MstEmployee();
-			mstKaryawan.setCreatedDate(mstKaryawanDto.getCreatedDate());
-			mstKaryawan.setCreatedUser(mstKaryawanDto.getCreatedUser());
-			mstKaryawan.setDateOfBirth(mstKaryawanDto.getDateOfBirth());
-			mstKaryawan.setDeleted(mstKaryawanDto.getDeleted());
-			mstKaryawan.setDepartment(mstKaryawanDto.getDepartment());
-			mstKaryawan.setEmployeeName(mstKaryawanDto.getEmployeeName());
-			mstKaryawan.setUpdatedDate(mstKaryawanDto.getUpdatedDate());
-			mstKaryawan.setUpdatedUser(mstKaryawanDto.getUpdatedUser());
-			mstKaryawan.setGender(mstKaryawanDto.getGender());
-			mstKaryawan.setId(mstKaryawanDto.getId());
-			mstKaryawan.setBirthPlace(mstKaryawanDto.getBirthPlace());
-			mstKaryawan.setAddress(mstKaryawanDto.getAddress());
-			mstKaryawan.setCityCode(mstKaryawanDto.getCityCode());
-			mstKaryawan.setPostalCode(mstKaryawanDto.getPostalCode());
-			mstKaryawan.setProvinceCode(mstKaryawanDto.getProvinceCode());
-			mstEmployeeDao.save(mstKaryawan);
+			MstEmployee employee = new MstEmployee();
+			employee.setCreatedDate(mstEmployeeDto.getCreatedDate());
+			employee.setCreatedUser(mstEmployeeDto.getCreatedUser());
+			employee.setDateOfBirth(mstEmployeeDto.getDateOfBirth());
+			employee.setDeleted(mstEmployeeDto.getDeleted());
+			employee.setDepartment(mstEmployeeDto.getDepartment());
+			employee.setEmployeeName(mstEmployeeDto.getEmployeeName());
+			employee.setUpdatedDate(mstEmployeeDto.getUpdatedDate());
+			employee.setUpdatedUser(mstEmployeeDto.getUpdatedUser());
+			employee.setGender(mstEmployeeDto.getGender());
+			employee.setId(mstEmployeeDto.getId());
+			employee.setBirthPlace(mstEmployeeDto.getBirthPlace());
+			employee.setAddress(mstEmployeeDto.getAddress());
+			employee.setCityCode(mstEmployeeDto.getCityCode());
+			employee.setPostalCode(mstEmployeeDto.getPostalCode());
+			employee.setProvinceCode(mstEmployeeDto.getProvinceCode());
+			employee.setUsername(mstEmployeeDto.getUsername());
+			mstEmployeeDao.save(employee);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,24 +62,24 @@ public class MstEmployeeServiceImpl implements MstEmployeeService{
 			if(res != null && !res.isEmpty() && res.size() > 0){
 				list = new ArrayList<MstEmployeeDto>();
 				
-				for(MstEmployee karyawan : res){
+				for(MstEmployee employee : res){
 					MstEmployeeDto dto = new MstEmployeeDto();
-					dto.setCreatedDate(karyawan.getCreatedDate());
-					dto.setCreatedUser(karyawan.getCreatedUser());
-					dto.setDateOfBirth(karyawan.getDateOfBirth());
-					dto.setDeleted(karyawan.getDeleted());
-					dto.setDepartment(karyawan.getDepartment());
-					dto.setGender(karyawan.getGender());
-					dto.setId(karyawan.getId());
-					dto.setEmployeeName(karyawan.getEmployeeName());
-					dto.setUpdatedDate(karyawan.getUpdatedDate());
-					dto.setUpdatedUser(karyawan.getUpdatedUser());
-					dto.setBirthPlace(karyawan.getBirthPlace());
-					dto.setAddress(karyawan.getAddress());
-					dto.setCityCode(karyawan.getCityCode());
-					dto.setPostalCode(karyawan.getPostalCode());
-					dto.setProvinceCode(karyawan.getProvinceCode());
-
+					dto.setCreatedDate(employee.getCreatedDate());
+					dto.setCreatedUser(employee.getCreatedUser());
+					dto.setDateOfBirth(employee.getDateOfBirth());
+					dto.setDeleted(employee.getDeleted());
+					dto.setDepartment(employee.getDepartment());
+					dto.setGender(employee.getGender());
+					dto.setId(employee.getId());
+					dto.setEmployeeName(employee.getEmployeeName());
+					dto.setUpdatedDate(employee.getUpdatedDate());
+					dto.setUpdatedUser(employee.getUpdatedUser());
+					dto.setBirthPlace(employee.getBirthPlace());
+					dto.setAddress(employee.getAddress());
+					dto.setCityCode(employee.getCityCode());
+					dto.setPostalCode(employee.getPostalCode());
+					dto.setProvinceCode(employee.getProvinceCode());
+					dto.setUsername(employee.getUsername());
 					list.add(dto);
 				}
 			}
@@ -90,17 +91,17 @@ public class MstEmployeeServiceImpl implements MstEmployeeService{
 	}
 
 	@Override
-	public void delete(MstEmployeeDto mstKaryawanDto) {
+	public void delete(MstEmployeeDto mstEmployeeDto) {
 		try {
 			MstEmployeePk karyPk = new MstEmployeePk();
-			karyPk.setId(mstKaryawanDto.getId());
+			karyPk.setId(mstEmployeeDto.getId());
 			
-			MstEmployee karyawan = mstEmployeeDao.findOne(karyPk);
-			if(karyawan != null && karyawan.getId() != null){
-				karyawan.setDeleted(true);
-				karyawan.setUpdatedDate(new Date());
-				karyawan.setUpdatedUser("ADMIN");
-				mstEmployeeDao.save(karyawan);
+			MstEmployee employee = mstEmployeeDao.findOne(karyPk);
+			if(employee != null && employee.getId() != null){
+				employee.setDeleted(true);
+				employee.setUpdatedDate(new Date());
+				employee.setUpdatedUser("ADMIN");
+				mstEmployeeDao.save(employee);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,25 +109,26 @@ public class MstEmployeeServiceImpl implements MstEmployeeService{
 	}
 
 	@Override
-	public MstEmployeeDto findOne(MstEmployeeDto mstKaryawanDto) {
+	public MstEmployeeDto findByEmpId(Integer employeeId) {
 		try {
 			MstEmployeePk karyPk = new MstEmployeePk();
-			karyPk.setId(mstKaryawanDto.getId());
+			karyPk.setId(employeeId);
 			MstEmployeeDto dto = null;
-			MstEmployee karyawan = mstEmployeeDao.findOne(karyPk);
-			if(karyawan != null && karyawan.getId() != null){
+			MstEmployee employee = mstEmployeeDao.findOne(karyPk);
+			if(employee != null && employee.getId() != null){
 				dto = new MstEmployeeDto();
-				dto.setCreatedDate(karyawan.getCreatedDate());
-				dto.setCreatedUser(karyawan.getCreatedUser());
-				dto.setDateOfBirth(karyawan.getDateOfBirth());
-				dto.setDeleted(karyawan.getDeleted());
-				dto.setDepartment(karyawan.getDepartment());
-				dto.setGender(karyawan.getGender());
-				dto.setId(karyawan.getId());
-				dto.setEmployeeName(karyawan.getEmployeeName());
-				dto.setUpdatedDate(karyawan.getUpdatedDate());
-				dto.setUpdatedUser(karyawan.getUpdatedUser());
-				dto.setBirthPlace(karyawan.getBirthPlace());
+				dto.setCreatedDate(employee.getCreatedDate());
+				dto.setCreatedUser(employee.getCreatedUser());
+				dto.setDateOfBirth(employee.getDateOfBirth());
+				dto.setDeleted(employee.getDeleted());
+				dto.setDepartment(employee.getDepartment());
+				dto.setGender(employee.getGender());
+				dto.setId(employee.getId());
+				dto.setEmployeeName(employee.getEmployeeName());
+				dto.setUpdatedDate(employee.getUpdatedDate());
+				dto.setUpdatedUser(employee.getUpdatedUser());
+				dto.setBirthPlace(employee.getBirthPlace());
+				dto.setUsername(employee.getUsername());
 			}
 			return dto;
 		} catch (Exception e) {
@@ -136,31 +138,59 @@ public class MstEmployeeServiceImpl implements MstEmployeeService{
 	}
 
 	@Override
-	public void update(MstEmployeeDto mstKaryawanDto) {
+	public void update(MstEmployeeDto mstEmployeeDto) {
 		try {
 			MstEmployeePk karyPk = new MstEmployeePk();
-			karyPk.setId(mstKaryawanDto.getId());
+			karyPk.setId(mstEmployeeDto.getId());
 			
-			MstEmployee karyawan = mstEmployeeDao.findOne(karyPk);
-			if(karyawan != null && karyawan.getId() != null){
-				karyawan.setDeleted(mstKaryawanDto.getDeleted());
-				karyawan.setUpdatedDate(new Date());
-				karyawan.setUpdatedUser("ADMIN");
-				karyawan.setDateOfBirth(mstKaryawanDto.getDateOfBirth());
-				karyawan.setDepartment(mstKaryawanDto.getDepartment());
-				karyawan.setGender(mstKaryawanDto.getGender());
-				karyawan.setEmployeeName(mstKaryawanDto.getEmployeeName());
-				karyawan.setBirthPlace(mstKaryawanDto.getBirthPlace());
-				karyawan.setAddress(mstKaryawanDto.getAddress());
-				karyawan.setCityCode(mstKaryawanDto.getCityCode());
-				karyawan.setPostalCode(mstKaryawanDto.getPostalCode());
-				karyawan.setProvinceCode(mstKaryawanDto.getProvinceCode());
+			MstEmployee employee = mstEmployeeDao.findOne(karyPk);
+			if(employee != null && employee.getId() != null){
+				employee.setDeleted(mstEmployeeDto.getDeleted());
+				employee.setUpdatedDate(new Date());
+				employee.setUpdatedUser("ADMIN");
+				employee.setDateOfBirth(mstEmployeeDto.getDateOfBirth());
+				employee.setDepartment(mstEmployeeDto.getDepartment());
+				employee.setGender(mstEmployeeDto.getGender());
+				employee.setEmployeeName(mstEmployeeDto.getEmployeeName());
+				employee.setBirthPlace(mstEmployeeDto.getBirthPlace());
+				employee.setAddress(mstEmployeeDto.getAddress());
+				employee.setCityCode(mstEmployeeDto.getCityCode());
+				employee.setPostalCode(mstEmployeeDto.getPostalCode());
+				employee.setProvinceCode(mstEmployeeDto.getProvinceCode());
+				employee.setUsername(mstEmployeeDto.getUsername());
 
-				mstEmployeeDao.save(karyawan);
+				mstEmployeeDao.save(employee);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public MstEmployeeDto findByUsername(String username) {
+		try {
+			MstEmployee employee = mstEmployeeDao.findByUsername(username);
+			if(employee != null && !employee.getId().equals(0) && !employee.getUsername().equalsIgnoreCase("")){
+				MstEmployeeDto dto = new MstEmployeeDto();
+				dto.setCreatedDate(employee.getCreatedDate());
+				dto.setCreatedUser(employee.getCreatedUser());
+				dto.setDateOfBirth(employee.getDateOfBirth());
+				dto.setDeleted(employee.getDeleted());
+				dto.setDepartment(employee.getDepartment());
+				dto.setGender(employee.getGender());
+				dto.setId(employee.getId());
+				dto.setEmployeeName(employee.getEmployeeName());
+				dto.setUpdatedDate(employee.getUpdatedDate());
+				dto.setUpdatedUser(employee.getUpdatedUser());
+				dto.setBirthPlace(employee.getBirthPlace());
+				dto.setUsername(employee.getUsername());
+
+				return dto;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

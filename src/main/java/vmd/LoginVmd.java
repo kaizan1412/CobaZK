@@ -8,7 +8,9 @@ import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Messagebox;
 
+import dto.MstEmployeeDto;
 import dto.MstUserDto;
+import service.MstEmployeeService;
 import service.MstUserService;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -16,8 +18,12 @@ public class LoginVmd {
 	
 	@WireVariable
 	private MstUserService mstUserSvc;
+
+	@WireVariable
+	private MstEmployeeService mstEmployeeSvc; 
 	
 	private MstUserDto mstUserDto;
+	private MstEmployeeDto mstEmployeeDto;
 	private String username;
 	private String password;
 	
@@ -30,11 +36,19 @@ public class LoginVmd {
 			
 //			if(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")) {
 			if(mstUserDto != null && mstUserDto.getId() != null){
-				Sessions.getCurrent().setAttribute("user", mstUserDto);
-				Executions.sendRedirect("/index.zul");
+				mstEmployeeDto = mstEmployeeSvc.findByUsername(mstUserDto.getUsername());
+				if(mstEmployeeDto != null && !mstEmployeeDto.getUsername().equalsIgnoreCase("")){
+					Sessions.getCurrent().setAttribute("user", mstEmployeeDto);
+					Executions.sendRedirect("/index.zul");
+				}
+				else{
+					Messagebox.show("Invalid Login. User not have registered yet.");
+					setUsername(null);
+					setPassword(null);
+				}
 			}
 			else {
-				Messagebox.show("Invalid Login");
+				Messagebox.show("Invalid Login. Username and Password mismatch.");
 				setUsername(null);
 				setPassword(null);
 			}
@@ -72,6 +86,16 @@ public class LoginVmd {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public MstEmployeeDto getMstEmployeeDto() {
+		return mstEmployeeDto;
+	}
+
+
+	public void setMstEmployeeDto(MstEmployeeDto mstEmployeeDto) {
+		this.mstEmployeeDto = mstEmployeeDto;
 	}
 	
 	
