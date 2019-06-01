@@ -79,14 +79,6 @@ public class KaryawanVmd {
 		this.listKaryawan = listKaryawan;
 	}
 
-	public MstEmployeeDto getMstKaryawanDto() {
-		return mstEmployeeDto;
-	}
-
-	public void setMstKaryawanDto(MstEmployeeDto mstKaryawanDto) {
-		this.mstEmployeeDto = mstKaryawanDto;
-	}
-
 	public boolean isReadonly() {
 		return readonly;
 	}
@@ -101,6 +93,14 @@ public class KaryawanVmd {
 
 	public void setMstKaryawanSvc(MstEmployeeService mstKaryawanSvc) {
 		this.mstEmployeeSvc = mstKaryawanSvc;
+	}
+
+	public MstEmployeeDto getMstEmployeeDto() {
+		return mstEmployeeDto;
+	}
+
+	public void setMstEmployeeDto(MstEmployeeDto mstEmployeeDto) {
+		this.mstEmployeeDto = mstEmployeeDto;
 	}
 	
 }

@@ -14,7 +14,7 @@
 			<space />
 			
 			<listbox model="@load(vm.listKaryawan)" 
-							 selectedItem="@bind(vm.mstKaryawanDto)">
+							 selectedItem="@bind(vm.mstEmployeeDto)">
 					<listhead>
 						<listheader label="Id Karyawan" sort="auto" />
 						<listheader label="Employee Name" sort="auto" />

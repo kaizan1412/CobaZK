@@ -81,11 +81,12 @@ public class OrderVmd {
 							try {
 								trOrderHeaderSvc.delete(trOrderHeaderDto);
 								trOrderHeaderSvc.deleteOrderDetail(trOrderHeaderDto.getNoNota());
+								listOrders.remove(trOrderHeaderDto);
 								BindUtils.postNotifyChange(null, null, OrderVmd.this, "listOrders");
-								Clients.showNotification("Data berhasil di hapus.", Clients.NOTIFICATION_TYPE_ERROR, null, null, 500);
+								Clients.showNotification("Data berhasil di hapus.", Clients.NOTIFICATION_TYPE_INFO, null, null, 500);
 							} catch (Exception e) {
 								BindUtils.postNotifyChange(null, null, OrderVmd.this, "listOrders");
-								Clients.showNotification("Data gagal di hapus.", Clients.NOTIFICATION_TYPE_ERROR, null, null, 500);
+								Clients.showNotification("Data gagal di hapus." + e.getLocalizedMessage(), Clients.NOTIFICATION_TYPE_ERROR, null, null, 500);
 							}
 						}
 					});
