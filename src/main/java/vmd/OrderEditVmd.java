@@ -221,9 +221,9 @@ public class OrderEditVmd {
 	@Command(value="tampilStok")
 	@NotifyChange(value={"stok"})
 	public void tampilStock(){
-		if(!trOrderDetailDto.getProductCode().equalsIgnoreCase("")){
+		if(trOrderDetailDto.getProduct() != null && trOrderDetailDto.getProduct().getProductCode() != null && !trOrderDetailDto.getProduct().getProductCode().equalsIgnoreCase("")){
 			mstProductDto = new MstProductDto();
-			mstProductDto = mstProductSvc.findByProductCode(trOrderDetailDto.getProductCode());
+			mstProductDto = mstProductSvc.findByProductCode(trOrderDetailDto.getProduct().getProductCode());
 			stok = mstProductDto.getQuantity();
 		}
 	}
