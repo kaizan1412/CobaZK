@@ -98,7 +98,14 @@ public class OrderEditVmd {
 				}
 				
 				trOrderHeaderDto.setEmployee(mstEmployeeDto);
-				listOrderDetails = trOrderDetailSvc.findByNoNota(trOrderHeaderDto.getNoNota());
+				if(trOrderDetailSvc.findByNoNota(trOrderHeaderDto.getNoNota()) != null
+					&& !trOrderDetailSvc.findByNoNota(trOrderHeaderDto.getNoNota()).isEmpty()
+					&& trOrderDetailSvc.findByNoNota(trOrderHeaderDto.getNoNota()).size() > 0){
+					listOrderDetails = trOrderDetailSvc.findByNoNota(trOrderHeaderDto.getNoNota());
+				}
+				else{
+					listOrderDetails = new ArrayList<>();
+				}
 				listProducts = mstProductSvc.findAllDeletedFalse();
 			} catch (Exception e) {
 				Messagebox.show("Error found. Msg: " + e.getCause());
@@ -165,18 +172,20 @@ public class OrderEditVmd {
 	public void addDetail(){
 		setStatusPopup(Boolean.TRUE);
 		trOrderDetailDto = new TrOrderDetailDto();
+		trOrderDetailDto.setDiscount(0);
 		setStok(0L);
 	}
 	
 	@Command(value="saveDetail")
-	@NotifyChange(value={"listOrderDetails", "statusPopup", "trOrderHeaderDto"})
+	@NotifyChange(value={"listOrderDetails", "statusPopup", "trOrderHeaderDto", "tampungHargaTotal"})
 	public void saveDetail(){
 		listOrderDetails.add(trOrderDetailDto);
-
+		
 		BigDecimal hasil = new BigDecimal(0);
 		for(TrOrderDetailDto detail : listOrderDetails){
 			hasil = hasil.add(detail.getSubtotal());
 		}
+		tampungHargaTotal = hasil;
 		trOrderHeaderDto.setTotalPrice(hasil);
 		setStatusPopup(Boolean.FALSE);
 		
@@ -195,36 +204,66 @@ public class OrderEditVmd {
 	}
 	
 	@Command(value="hitungSubTotal")
-	@NotifyChange(value={"trOrderDetailDto"})
+	@NotifyChange(value={"trOrderDetailDto", "tampungSubTotal"})
 	public void hitungSubTotal(){
-		if(!trOrderDetailDto.getUnitPrice().equals(0) && !trOrderDetailDto.getQty().equals(0) && trOrderDetailDto.getDiscount().equals(0)){
-			tampungSubTotal = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty()));
+		if(trOrderDetailDto.getUnitPrice().doubleValue() != 0 && trOrderDetailDto.getQty().intValue() != 0 && trOrderDetailDto.getDiscount().intValue() == 0){
+			Double tampungSub = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty().intValue())).doubleValue();
+			tampungSubTotal = new BigDecimal(tampungSub);
+//			tampungSubTotal = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty().intValue()));
+//			tampungSubTotal = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty()));
+			System.out.println("SubTotal without discount");
 			trOrderDetailDto.setSubtotal(tampungSubTotal);
 		}
-		else if(!trOrderDetailDto.getUnitPrice().equals(0) && !trOrderDetailDto.getQty().equals(0) && !trOrderDetailDto.getDiscount().equals(0)){
-			tampungSubTotal = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty()));
-			BigDecimal tampungDisc = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty())).multiply(new BigDecimal(trOrderDetailDto.getDiscount()).divide(new BigDecimal(100)));
-			tampungSubTotal = tampungSubTotal.subtract(tampungDisc);
+		else if(trOrderDetailDto.getUnitPrice().doubleValue() != 0 && trOrderDetailDto.getQty().intValue() != 0 && trOrderDetailDto.getDiscount().intValue() != 0){
+			System.out.println("Subtotal with discount.");
+			Double tampungSub = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty().intValue())).doubleValue();
+//			tampungSubTotal = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty().intValue()));
+//			tampungSubTotal = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty()));
+			System.out.println("Unit Price: " + trOrderDetailDto.getUnitPrice());
+			System.out.println("Qty: " + trOrderDetailDto.getQty());
+			Double discount = Double.valueOf(trOrderDetailDto.getDiscount().intValue() / 100.0);
+			System.out.println("Discount Perc Sub: " + discount);
+			Double tampungDisc = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty().intValue())).multiply(new BigDecimal((trOrderDetailDto.getDiscount().intValue() / 100.0))).doubleValue();
+			System.out.println("Discount subtotal: " + tampungDisc);
+//			BigDecimal tampungDisc = trOrderDetailDto.getUnitPrice().multiply(new BigDecimal(trOrderDetailDto.getQty())).multiply(new BigDecimal(trOrderDetailDto.getDiscount()).divide(new BigDecimal(100)));
+			tampungSub = tampungSub - tampungDisc;
+			tampungSubTotal = new BigDecimal(tampungSub);//tampungSubTotal.subtract(tampungDisc);
 			trOrderDetailDto.setSubtotal(tampungSubTotal);
 		}
 	}
 	
 	@Command(value="hitungHargaTotal")
-	@NotifyChange(value={"trOrderHeaderDto"})
+	@NotifyChange(value={"trOrderHeaderDto", "tampungHargaTotal"})
 	public void hitungHargaTotal(){
+		Double tampungSub = 0.0;
 		if(!trOrderHeaderDto.getGlobalDiscount().equals(0)){
-			BigDecimal tampungDisc = trOrderHeaderDto.getTotalPrice().multiply(new BigDecimal(trOrderHeaderDto.getGlobalDiscount()).divide(new BigDecimal(100)));
-			tampungHargaTotal = trOrderHeaderDto.getTotalPrice().subtract(tampungDisc);
+//			BigDecimal tampungDisc = trOrderHeaderDto.getTotalPrice().multiply(new BigDecimal(trOrderHeaderDto.getGlobalDiscount()).divide(new BigDecimal(100)));
+			Double discount = (double) (trOrderHeaderDto.getGlobalDiscount() / 100.0);
+			System.out.println("Discount Percentage: " + discount);
+			Double tampungDisc = trOrderHeaderDto.getTotalPrice().multiply(new BigDecimal(discount)).doubleValue();
+			System.out.println("Discount: " + tampungDisc);
+			tampungSub = trOrderHeaderDto.getTotalPrice().doubleValue() - tampungDisc;
+			tampungHargaTotal = new BigDecimal(tampungSub);//trOrderHeaderDto.getTotalPrice().subtract(tampungDisc);
+			trOrderHeaderDto.setTotalPrice(tampungHargaTotal);
+		}
+		else{
+			BigDecimal hasil = new BigDecimal(0);
+			for(TrOrderDetailDto detail : listOrderDetails){
+				hasil = hasil.add(detail.getSubtotal());
+			}
+			tampungHargaTotal = hasil;
+			trOrderHeaderDto.setTotalPrice(tampungHargaTotal);
 		}
 	}
 	
 	@Command(value="tampilStok")
-	@NotifyChange(value={"stok"})
+	@NotifyChange(value={"stok", "trOrderDetailDto"})
 	public void tampilStock(){
 		if(trOrderDetailDto.getProduct() != null && trOrderDetailDto.getProduct().getProductCode() != null && !trOrderDetailDto.getProduct().getProductCode().equalsIgnoreCase("")){
 			mstProductDto = new MstProductDto();
 			mstProductDto = mstProductSvc.findByProductCode(trOrderDetailDto.getProduct().getProductCode());
 			stok = mstProductDto.getQuantity();
+			trOrderDetailDto.setUnitPrice(mstProductDto.getUnitPrice());
 		}
 	}
 

@@ -96,8 +96,8 @@
 				<vlayout>
 					<hlayout>
 						<label value="Global Discount % : " style="float:right;" />
-						<intbox value="@bind(vm.trOrderHeaderDto.globalDiscount)" 
-								style="text-align:left;" width="70px" onChange="@command('hitungHargaTotal')" />
+						<decimalbox value="@bind(vm.trOrderHeaderDto.globalDiscount)" 
+								style="text-align:left;" width="70px" onChange="@command('hitungHargaTotal')" onOK="@command('hitungHargaTotal')" format="#,##0.##"/>
 					</hlayout>
 					<hlayout>
 						<label value="Total : " style="float:right;" />
@@ -149,7 +149,7 @@
 					
 					<row>
 						<label value="Harga Satuan" />
-						<textbox value="@bind(vm.trOrderDetailDto.unitPrice)" />
+						<decimalbox value="@bind(vm.trOrderDetailDto.unitPrice)" readonly="true" format="#,##0.##" />
 					</row>
 					
 					<row>
@@ -159,12 +159,12 @@
 					
 					<row>
 						<label value="Diskon" />
-						<intbox value="@bind(vm.trOrderDetailDto.discount)" onChange="@command('hitungSubTotal')" />
+						<intbox value="@bind(vm.trOrderDetailDto.discount)" onChange="@command('hitungSubTotal')" onOK="@command('hitungSubTotal')" />
 					</row>
 					
 					<row>
 						<label value="Subtotal" />
-						<decimalbox value="@bind(vm.trOrderDetailDto.subtotal)" />
+						<decimalbox value="@bind(vm.trOrderDetailDto.subtotal)" constraint="no negative,no empty" readonly="true" format="#,##0.##" />
 					</row>
 					
 				</rows>
