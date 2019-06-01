@@ -96,13 +96,13 @@
 				<vlayout>
 					<hlayout>
 						<label value="Global Discount % : " style="float:right;" />
-						<decimalbox value="@bind(vm.trOrderHeaderDto.globalDiscount)" 
-								style="text-align:left;" width="70px" onChange="@command('hitungHargaTotal')" onOK="@command('hitungHargaTotal')" format="#,##0.##"/>
+						<intbox value="@bind(vm.trOrderHeaderDto.globalDiscount)" 
+								style="text-align:left;" width="70px" onChange="@command('hitungHargaTotal')" onOK="@command('hitungHargaTotal')" />
 					</hlayout>
 					<hlayout>
 						<label value="Total : " style="float:right;" />
-						<intbox value="@bind(vm.trOrderHeaderDto.totalPrice)" style="text-align:left;" 
-								width="70px" readonly="true" />
+						<decimalbox value="@bind(vm.trOrderHeaderDto.totalPrice)" style="text-align:left;" 
+								width="70px" readonly="true" format="#,##0.##" />
 					</hlayout>
 				</vlayout>
 			</div>
