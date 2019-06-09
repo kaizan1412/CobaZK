@@ -77,5 +77,13 @@ public class MstUserDto {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+	@Override
+	public String toString() {
+		return "MstUserDto [createdDate=" + createdDate + ", createdUser="
+				+ createdUser + ", updatedDate=" + updatedDate
+				+ ", updatedUser=" + updatedUser + ", deleted=" + deleted
+				+ ", id=" + id + ", username=" + username + ", password="
+				+ password + "]";
+	}
 
 }

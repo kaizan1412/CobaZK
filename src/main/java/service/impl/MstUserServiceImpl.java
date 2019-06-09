@@ -1,6 +1,8 @@
 package service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -81,12 +83,15 @@ public class MstUserServiceImpl implements MstUserService {
 	public void save(MstUserDto mstUserDto) {
 		try {
 			MstUser user = new MstUser();
-			user.setCreatedDate(mstUserDto.getCreatedDate());
-			user.setCreatedUser(mstUserDto.getCreatedUser());
+			if(mstUserDto.getCreatedDate() == null){
+				user.setCreatedDate(new Date());
+			}
+			else{
+				user.setCreatedDate(mstUserDto.getCreatedDate());
+			}
+			user.setCreatedUser("ADMIN");
 			user.setDeleted(mstUserDto.getDeleted());
 			user.setPassword(mstUserDto.getPassword());
-			user.setUpdatedDate(mstUserDto.getUpdatedDate());
-			user.setUpdatedUser(mstUserDto.getUpdatedUser());
 			user.setUsername(mstUserDto.getUsername());
 			user.setId("USR001");
 			mstUserDao.save(user);

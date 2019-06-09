@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,6 +85,23 @@ public class UserController {
 			return new RestResponse(HttpStatus.NOT_FOUND.value(), e.getLocalizedMessage(), null);
 		}
 		return null;
+	}
+	
+	@RequestMapping(
+			value="/save",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public RestResponse insertUser(
+			@RequestBody MstUserDto mstUserDto){
+		
+		try {
+			mstUserSvc.save(mstUserDto);
+			return new RestResponse(HttpStatus.OK.value(),"Success", mstUserDto);
+		} catch (Exception e) {
+			return new RestResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getLocalizedMessage(), null);
+		}
+		
 	}
 
 }
