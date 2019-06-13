@@ -65,4 +65,10 @@ public class MstUser extends BaseEntity implements Serializable{
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "MstUser [id=" + id + ", username=" + username + ", password="
+				+ password + "]";
+	}
+
 }

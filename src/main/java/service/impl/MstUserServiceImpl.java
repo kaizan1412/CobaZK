@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -98,6 +99,35 @@ public class MstUserServiceImpl implements MstUserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Optional<List<MstUserDto>> findAllBySpFirstWay() {
+//		try {
+//			List<MstUserDto> dtos = null;
+//			List<MstUser> users = mstUserDao.();
+//			
+//			if(users != null && !users.isEmpty() && users.size() > 0){
+//				for(MstUser user : users){
+//					MstUserDto mstUserDto = new MstUserDto();
+//					mstUserDto.setCreatedDate(user.getCreatedDate());
+//					mstUserDto.setCreatedUser(user.getCreatedUser());
+//					mstUserDto.setDeleted(user.getDeleted());
+//					mstUserDto.setId(user.getId());
+//					mstUserDto.setPassword(user.getPassword());
+//					mstUserDto.setUpdatedDate(user.getUpdatedDate());
+//					mstUserDto.setUpdatedUser(user.getUpdatedUser());
+//					mstUserDto.setUsername(user.getUsername());
+//
+//					list.add(mstUserDto);
+//				}
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return Optional.empty();
+//		}
+		return Optional.empty();
 	}
 	
 	
