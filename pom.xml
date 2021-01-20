@@ -36,7 +36,7 @@
   	<javaee-web-api.version>7.0</javaee-web-api.version>
   	<bouncycastle.version>1.43</bouncycastle.version>
   	<joda-time.version>2.3</joda-time.version>
-  	<jackson.version>2.4.1.1</jackson.version>
+  	<jackson.version>2.9.10.7</jackson.version>
   	<modelmapper.version>0.7.2</modelmapper.version>
   	<zk.version>7.0.2</zk.version>
   	<sqljdbc.version>4.0</sqljdbc.version>
